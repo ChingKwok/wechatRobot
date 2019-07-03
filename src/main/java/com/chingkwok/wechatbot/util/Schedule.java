@@ -81,7 +81,7 @@ public class Schedule {
                     }
                 }
                 System.out.println(content.toString());
-//                SendMessage.execCurl(botUrl, content.toString(), SendMessage.TYPE_TEXT);
+                SendMessage.execCurl(botUrl, content.toString(), SendMessage.TYPE_TEXT);
             }
         } catch (IOException e) {
             e.printStackTrace();
