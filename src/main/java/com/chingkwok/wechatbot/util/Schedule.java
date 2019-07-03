@@ -93,7 +93,7 @@ public class Schedule {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ahh时mm分", Locale.CHINA);
         String nowtime = simpleDateFormat.format(new Date());
         String content = "海冕宝宝恰饭时间~~\n" +
-                "现在时间" + nowtime +
+                "现在时间" + nowtime + "\n"+
                 "我准备好了你准备好了吗大伙们?\n" +
                 "一起去吃蟹黄堡吧!!!\n";
         SendMessage.execCurl(hmbbUrl, content, SendMessage.TYPE_TEXT);
