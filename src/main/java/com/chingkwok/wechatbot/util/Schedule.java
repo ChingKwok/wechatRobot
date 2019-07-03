@@ -92,7 +92,7 @@ public class Schedule {
     public void botTellDinnder()throws IOException{
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ahh时mm分", Locale.CHINA);
         String nowtime = simpleDateFormat.format(new Date());
-        String content = "海冕宝宝午饭时间~~\n" +
+        String content = "海冕宝宝晚餐时间~~\n" +
                 "现在时间" + nowtime + "\n"+
                 "蟹老板的店好多人!大伙们我们赶紧去吧!\n" +
                 "一起去吃蟹黄堡吧!!!\n";
