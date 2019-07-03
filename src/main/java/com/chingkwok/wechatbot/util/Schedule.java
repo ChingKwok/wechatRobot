@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 @Component
 public class Schedule {
@@ -27,10 +28,10 @@ public class Schedule {
         String url = "http://apis.juhe.cn/simpleWeather/query?city=广州&key=c751c5271d41cd4f021af8fc1ca55867";
         try (CloseableHttpClient httpClient = HttpClients.createDefault()
         ) {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 E ahh时");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 E ahh时", Locale.CHINA);
             String nowtime = simpleDateFormat.format(new Date());
-            nowtime = nowtime.replaceAll("pm", "下午");
-            nowtime = nowtime.replaceAll("am", "上午");
+            nowtime = nowtime.replaceAll("PM", "下午");
+            nowtime = nowtime.replaceAll("AM", "上午");
             HttpGet httpGet = new HttpGet(url);
             final CloseableHttpResponse res = httpClient.execute(httpGet);
             final HttpEntity entity = res.getEntity();
