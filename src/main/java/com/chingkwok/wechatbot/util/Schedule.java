@@ -22,10 +22,10 @@ public class Schedule {
     private static final String botUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=eb637d36-a939-4323-ba10-350fee64ca37";
     private static final String widUrl = "http://apis.juhe.cn/simpleWeather/wids";
 
-    @Scheduled(cron = "0 0 0 8,18 * ?")
+    @Scheduled(cron = "0 0 8,18 * * ?")
     public static void BotSpeakWeather() {
         String url = "http://apis.juhe.cn/simpleWeather/query?city=广州&key=c751c5271d41cd4f021af8fc1ca55867";
-        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()
         ) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 E ahh时");
             String nowtime = simpleDateFormat.format(new Date());
@@ -48,7 +48,7 @@ public class Schedule {
                 final String aqi = realtime.getString("aqi");
 
                 StringBuilder content = new StringBuilder("派带星天气时间~\n");
-                content.append(nowtime+"\n");
+                content.append(nowtime + "\n");
                 content.append(city + "天气 : " + info + "\n");
 
                 if (!StringUtils.isBlank(temperature)) {
@@ -64,7 +64,7 @@ public class Schedule {
                     content.append("风力 : " + power + "\n");
                 }
                 if (!StringUtils.isBlank(aqi)) {
-                    content.append("空气指数 : " + aqi +" ");
+                    content.append("空气指数 : " + aqi + " ");
                     int aqiInt = Integer.parseInt(aqi);
                     if (aqiInt >= 0 && aqiInt <= 50) {
                         content.append("良好 非常适合户外运动哦~~");
@@ -76,7 +76,7 @@ public class Schedule {
                         content.append("中度污染 空气质量不太好哦~");
                     } else if (aqiInt <= 300) {
                         content.append("重度污染 空气质量很差哦~没事就别外出了~");
-                    } else if (aqiInt > 300) {
+                    } else {
                         content.append("严重污染 有钱搬家~没钱就买净化器吧~");
                     }
                 }

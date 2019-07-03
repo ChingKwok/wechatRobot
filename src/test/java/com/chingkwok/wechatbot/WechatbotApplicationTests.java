@@ -12,7 +12,7 @@ public class WechatbotApplicationTests {
 
     @Test
     public void contextLoads() {
-        Schedule.BotSpeakWeather();
+//        Schedule.BotSpeakWeather();
     }
 
 }
