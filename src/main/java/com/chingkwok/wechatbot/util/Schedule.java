@@ -1,10 +1,8 @@
 package com.chingkwok.wechatbot.util;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -20,7 +18,8 @@ import java.util.Locale;
 
 @Component
 public class Schedule {
-    private static final String botUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=eb637d36-a939-4323-ba10-350fee64ca37";
+    private static final String hmbbUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=d1d23d26-f975-4971-a46d-faaa481510f3";
+    private static final String pdxUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=eb637d36-a939-4323-ba10-350fee64ca37";
     private static final String widUrl = "http://apis.juhe.cn/simpleWeather/wids";
 
     @Scheduled(cron = "0 0 8,18 * * ?")
@@ -82,10 +81,21 @@ public class Schedule {
                     }
                 }
                 System.out.println(content.toString());
-                SendMessage.execCurl(botUrl, content.toString(), SendMessage.TYPE_TEXT);
+                SendMessage.execCurl(pdxUrl, content.toString(), SendMessage.TYPE_TEXT);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Scheduled(cron = "0 0,30 12,18 * *")
+    public void botTellEat()throws IOException{
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ahh时mm分", Locale.CHINA);
+        String nowtime = simpleDateFormat.format(new Date());
+        String content = "海冕宝宝恰饭时间~~\n" +
+                "现在时间" + nowtime +
+                "我准备好了你准备好了吗大伙们?\n" +
+                "一起去吃蟹黄堡吧!!!\n";
+        SendMessage.execCurl(hmbbUrl, content, SendMessage.TYPE_TEXT);
     }
 }
