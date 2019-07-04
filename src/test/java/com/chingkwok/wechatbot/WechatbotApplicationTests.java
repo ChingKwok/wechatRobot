@@ -12,6 +12,8 @@ public class WechatbotApplicationTests {
 
     @Test
     public void contextLoads() {
+        final Schedule schedule = new Schedule();
+        schedule.botWeather();
     }
 
 }

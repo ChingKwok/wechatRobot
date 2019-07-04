@@ -20,17 +20,26 @@ import java.util.Locale;
 public class Schedule {
     private static final String hmbbUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=d1d23d26-f975-4971-a46d-faaa481510f3";
     private static final String pdxUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=eb637d36-a939-4323-ba10-350fee64ca37";
-    private static final String widUrl = "http://apis.juhe.cn/simpleWeather/wids";
+
+    private boolean checkWeekend(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E", Locale.CHINA);
+        String day = simpleDateFormat.format(new Date());
+        if(day.equals("星期天")||day.equals("星期六")){
+            return true;
+        }
+        return false;
+    }
 
     @Scheduled(cron = "0 0 8,18 * * ?")
-    public static void BotSpeakWeather() {
+    public void botWeather() {
+        if(checkWeekend()){
+            return;
+        }
         String url = "http://apis.juhe.cn/simpleWeather/query?city=广州&key=c751c5271d41cd4f021af8fc1ca55867";
         try (CloseableHttpClient httpClient = HttpClients.createDefault()
         ) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 E ahh时", Locale.CHINA);
             String nowtime = simpleDateFormat.format(new Date());
-            nowtime = nowtime.replaceAll("PM", "下午");
-            nowtime = nowtime.replaceAll("AM", "上午");
             HttpGet httpGet = new HttpGet(url);
             final CloseableHttpResponse res = httpClient.execute(httpGet);
             final HttpEntity entity = res.getEntity();
@@ -89,7 +98,7 @@ public class Schedule {
     }
 
     @Scheduled(cron = "0 30 18 * * ?")
-    public void botTellDinnder()throws IOException{
+    public void botDinnder()throws IOException{
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ahh时mm分", Locale.CHINA);
         String nowtime = simpleDateFormat.format(new Date());
         String content = "海冕宝宝晚餐时间~~\n" +
@@ -100,7 +109,7 @@ public class Schedule {
     }
 
     @Scheduled(cron = "0 0 12 * * ?")
-    public void botTellLunch()throws IOException{
+    public void botLunch()throws IOException{
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ahh时mm分", Locale.CHINA);
         String nowtime = simpleDateFormat.format(new Date());
         String content = "海冕宝宝午饭时间~~\n" +
